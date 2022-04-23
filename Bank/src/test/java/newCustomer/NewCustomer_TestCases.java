@@ -34,6 +34,7 @@ public class NewCustomer_TestCases {
 		driver.findElement(By.xpath("//td/input[@name='telephoneno']")).sendKeys("1234567890");
 		driver.findElement(By.xpath("//td/input[@name='emailid']")).sendKeys("abc@gmail.com");
 		driver.findElement(By.xpath("//td/input[@name='sub']")).click();
+		System.out.println("Test");
 
 	}
 
