@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -14,9 +15,10 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class login {
 	
-	public static String uid_xpath="//input[@name='uid']";
-	public static String pwd_xpath="//input[@name='password']";
-	public static String login_xpath="//td//input[@type='submit']";
+	private static String uid_xpath="//input[@name='uid']";
+	private static String pwd_xpath="//input[@name='password']";
+	private static String login_xpath="//td//input[@type='submit']";
+	private static String successLogin_messag_css=".heading3";
 	
 	
 	public static WebDriver loginIntoApplication() {
@@ -38,6 +40,13 @@ public class login {
 			pwd.sendKeys("gUnemAq");
 			WebElement login=driver.findElement(By.xpath(login_xpath));
 			login.click();
+			WebElement successElement= driver.findElement(By.cssSelector(successLogin_messag_css));
+			Assert.assertTrue(successElement.isDisplayed());
+			
+			String actualText=successElement.getText();
+			
+			String expectedText="Welcome To Manager's Page of GTPL Bank";
+			Assert.assertEquals("Welcome message didnot matched",expectedText, actualText);
 			
 		}catch(Exception e) {
 			System.out.println(e);
