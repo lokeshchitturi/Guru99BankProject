@@ -28,7 +28,6 @@ public class login {
 			list.add("--ignore-ssl-errors=yes");
 			list.add("--ignore-certificate-errors");
 			options.addArguments(list);
-	
 			driver = new ChromeDriver(options);
 			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
 			driver.manage().window().maximize();
