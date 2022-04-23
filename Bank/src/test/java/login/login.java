@@ -1,11 +1,14 @@
 package login;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
@@ -20,7 +23,13 @@ public class login {
 		WebDriver driver=null;
 		try {
 			WebDriverManager.chromedriver().setup();
-			driver = new ChromeDriver();
+			ChromeOptions options=new ChromeOptions();
+			List<String> list=new ArrayList<String>();
+			list.add("--ignore-ssl-errors=yes");
+			list.add("--ignore-certificate-errors");
+			options.addArguments(list);
+	
+			driver = new ChromeDriver(options);
 			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
 			driver.manage().window().maximize();
 			driver.get("https://demo.guru99.com/V1/index.php");
