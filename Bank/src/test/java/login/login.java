@@ -33,7 +33,7 @@ public class login {
 			driver = new ChromeDriver(options);
 			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
 			driver.manage().window().maximize();
-			driver.get("https://demo.guru99.com/V1/index.php");
+			driver.get("https://demo.guru99.com/V4/index.php");
 			WebElement uid=driver.findElement(By.xpath(uid_xpath));
 			uid.sendKeys("mngr400118");
 			WebElement pwd=driver.findElement(By.xpath(pwd_xpath));
@@ -45,7 +45,7 @@ public class login {
 			
 			String actualText=successElement.getText();
 			
-			String expectedText="Welcome To Manager's Page of GTPL Bank";
+			String expectedText="Welcome To Manager's Page of Guru99 Bank";
 			Assert.assertEquals("Welcome message didnot matched",expectedText, actualText);
 			
 		}catch(Exception e) {
