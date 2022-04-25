@@ -1,40 +1,87 @@
 package newCustomer;
 
 import java.time.Duration;
+import java.util.List;
+import java.util.Random;
+
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.WebElement;
 import login.login;
 
+
+//id<name< linketext < tagname < css < xpath
 public class NewCustomer_TestCases {
-	String NewCustomer_xpath = "//li/a[@href='addcustomerpage.php']";
-	String Customername_xpath = "//td/input[@name='name']";
-	String Gender_xpath = "//td/input[@name='rad1']";
-	String DOB_xpath = "//td/input[@name='dob']";
-	String Address_xpath = "//td/textarea[@name='addr']";
-	String City_xpath = "//td/input[@name='city']";
-	String State_xpath = "//td/input[@name='state']";
-	String Pin_xpath = "//td/input[@name='pinno']";
-	String TelephoneNo_xpath = "//td/input[@name='telephoneno']";
-	String EmailId_xpath = "//td/input[@name='emailid']";
-	String Submit_xpath = "//td/input[@name='sub']";
+	static String newcustomer_link = "New Customer";
+	static String customername_xpath = "//input[@name='name']";
+	static String gender_xpath = "//input[@type=\"radio\"]";
+	static String dob_xpath = "//input[@name='dob']";
+	static String address_xpath = "//textarea[@name='addr']";
+	static String city_xpath = "//input[@name='city']";
+	static String state_xpath = "//input[@name='state']";
+	static String pin_xpath = "//input[@name='pinno']";
+	static String telephoneno_xpath = "//input[@name='telephoneno']";
+	static String emailid_xpath = "//input[@name='emailid']";
+	static String submit_xpath = "//input[@name='sub']";
+	static String password_name="password";
+	static String successMessage_className="heading3";
 	static WebDriver driver;
 
-	public static void createNewCustomer() {
+	
+	public static void selectGender(String gender) throws Exception {
+		List<WebElement> list=driver.findElements(By.xpath(gender_xpath));
+		if(gender.equalsIgnoreCase("male")) {
+			list.get(0).click();
+		}else if(gender.equalsIgnoreCase("female")) {
+			list.get(1).click();
+		}else {
+			throw new Exception("Input is not givern either male or female");
+		}
+		
+	}
+	
+	public static void createNewCustomer() throws Exception {
+		
+		WebElement newcustomer=driver.findElement(By.linkText(newcustomer_link));
+		newcustomer.click();
+		List<WebElement> parentFrame= driver.findElements(By.xpath("//iframe[contains(@id,\"google_ads_iframe\")]"));
+		if(parentFrame.size()>0) {
+			driver.switchTo().frame(parentFrame.get(0));
+			driver.switchTo().frame(driver.findElement(By.id("ad_iframe")));
+			driver.findElement(By.id("dismiss-button")).click();
+			driver.switchTo().defaultContent();
+		}
+		
+		WebElement customername=driver.findElement(By.xpath(customername_xpath));
+		customername.sendKeys("Madhuri");
+		selectGender("female");
+		WebElement dob=driver.findElement(By.xpath(dob_xpath));
+		dob.sendKeys("29041992");
+		WebElement address=driver.findElement(By.xpath(address_xpath));
+		address.sendKeys("MainRoad");
+		WebElement city=driver.findElement(By.xpath(city_xpath));
+	    city.sendKeys("Kalidindi");
+		WebElement state=driver.findElement(By.xpath(state_xpath));
+		state.sendKeys("Andhrapradesh");
+		WebElement pin=driver.findElement(By.xpath(pin_xpath));
+		pin.sendKeys("521344");
+		WebElement telephoneno=driver.findElement(By.xpath(telephoneno_xpath));
+		telephoneno.sendKeys("1234567890");
+		WebElement emailid=driver.findElement(By.xpath(emailid_xpath));
+		Random random=new Random();
+		emailid.sendKeys("x"+random.nextInt(10000)+"yz"+random.nextInt()+"@gmail.com");
+		driver.findElement(By.name(password_name)).sendKeys("abc123");
+		WebElement submit=driver.findElement(By.xpath(submit_xpath));
+		submit.click();
+		WebElement successMessage_element=driver.findElement(By.className(successMessage_className ));
+		
+		Assert.assertEquals(successMessage_element.getText().trim(), "Customer Registered Successfully!!!");
 
-		driver.findElement(By.xpath("//li/a[@href='addcustomerpage.php']")).click();
-		driver.findElement(By.xpath("//td/input[@name='name']")).sendKeys("Madhuri");
-		driver.findElement(By.xpath("//td/input[@name='rad1']")).sendKeys("f");
-		driver.findElement(By.xpath("//td/input[@name='dob']")).sendKeys("29041992");
-		driver.findElement(By.xpath("//td/textarea[@name='addr']")).sendKeys("MainRoad");
-		driver.findElement(By.xpath("//td/input[@name='city']")).sendKeys("Kalidindi");
-		driver.findElement(By.xpath("//td/input[@name='state']")).sendKeys("Andhrapradesh");
-		driver.findElement(By.xpath("//td/input[@name='pinno']")).sendKeys("521344");
-		driver.findElement(By.xpath("//td/input[@name='telephoneno']")).sendKeys("1234567890");
-		driver.findElement(By.xpath("//td/input[@name='emailid']")).sendKeys("abc@gmail.com");
-		driver.findElement(By.xpath("//td/input[@name='sub']")).click();
-
+	}
+	
+	public static void validateFillAllDetailsErrorMessage() {
+		
 	}
 
 	public static void main(String[] args) throws Exception {
