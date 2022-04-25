@@ -77,11 +77,11 @@ public class NewCustomer_TestCases {
 		WebElement successMessage_element=driver.findElement(By.className(successMessage_className ));
 		
 		Assert.assertEquals(successMessage_element.getText().trim(), "Customer Registered Successfully!!!");
-
 	}
 	
 	public static void validateFillAllDetailsErrorMessage() {
 		
+
 	}
 
 	public static void main(String[] args) throws Exception {
