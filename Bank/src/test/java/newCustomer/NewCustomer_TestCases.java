@@ -1,13 +1,14 @@
 package newCustomer;
 
-import java.time.Duration;
 import java.util.List;
 import java.util.Random;
 
 import org.junit.Assert;
+import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+
 import login.login;
 
 
@@ -40,6 +41,8 @@ public class NewCustomer_TestCases {
 		}
 		
 	}
+	
+	
 	
 	public static void createNewCustomer() throws Exception {
 		
@@ -83,20 +86,11 @@ public class NewCustomer_TestCases {
 		
 
 	}
-
-	public static void main(String[] args) throws Exception {
-		try {
-			
-		
-			NewCustomer_TestCases.driver=login.loginIntoApplication();
-			//driver.findElement(By.xpath("//li/a[@href='addcustomerpage.php']")).click();
-			
-			//driver=login.loginIntoApplication();
-			NewCustomer_TestCases.createNewCustomer();
-			
-
-		} catch (Exception e) {
-			System.out.println(e);
-		}
+	
+	@Test
+	public void test_creatNewCustomer() throws Exception {
+		NewCustomer_TestCases.driver=login.loginIntoApplication();
+		NewCustomer_TestCases.createNewCustomer();
 	}
+
 }
