@@ -1,0 +1,63 @@
+package utils;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class WebdriverUtils {
+
+	public static WebDriver driver;
+	public static Properties prop;
+	
+	
+	public static final String propertiesFilepath="//src//test//resources//project.properties";
+	
+	
+	
+	public static void openBrowser() throws Exception {
+		prop=InstanceFactory.intilializePropertyFile(propertiesFilepath);
+		
+		String browserValue=prop.getProperty("browser");
+		
+		if(browserValue.equals("chrome")) {
+			WebDriverManager.chromedriver().setup();
+			ChromeOptions options=new ChromeOptions();
+			List<String> list=new ArrayList<String>();
+			list.add("--ignore-ssl-errors=yes");
+			list.add("--ignore-certificate-errors");
+			options.addArguments(list);
+			driver=new ChromeDriver(options);
+		}else if(browserValue.equals("firefox")) {
+			WebDriverManager.firefoxdriver().setup();
+			driver=new FirefoxDriver();
+		}else {
+			throw new Exception("You have not passed following values in the browser propert : chrome,firefox");
+		}
+		
+		driver.get(prop.getProperty("url"));
+		driver.manage().window().maximize();
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(Long.valueOf(prop.getProperty("IMPLICIT_TIMEOUT"))));
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+}

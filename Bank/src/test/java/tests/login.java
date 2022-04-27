@@ -1,4 +1,4 @@
-package login;
+package tests;
 
 import java.io.FileInputStream;
 import java.time.Duration;
@@ -15,30 +15,21 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import utils.WebdriverUtils;
 
-public class login {
+public class login extends Hooks {
 	
 	private static String uid_xpath="//input[@name='uid']";
 	private static String pwd_xpath="//input[@name='password']";
-	private static String login_xpath="//td//input[@type='submit']";
+	private static String login_xpath="//input[@type='submit']";
 	private static String successLogin_messag_css=".heading3";
+	static Properties prop;
 	
 	
 	public static WebDriver loginIntoApplication() {
-		WebDriver driver=null;
+		WebDriver driver=WebdriverUtils.driver;
 		try {
-			Properties prop=new Properties();
-			prop.load(new FileInputStream(System.getProperty("user.dir")+"\\src\\test\\resources\\project.properties"));
-			WebDriverManager.chromedriver().setup();
-			ChromeOptions options=new ChromeOptions();
-			List<String> list=new ArrayList<String>();
-			list.add("--ignore-ssl-errors=yes");
-			list.add("--ignore-certificate-errors");
-			options.addArguments(list);
-			driver = new ChromeDriver(options);
-			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(Long.valueOf(prop.getProperty("IMPLICIT_TIMEOUT"))));
-			driver.manage().window().maximize();
-			driver.get(prop.getProperty("url"));
+			prop=WebdriverUtils.prop;
 			WebElement uid=driver.findElement(By.xpath(uid_xpath));
 			uid.sendKeys(prop.getProperty("username"));
 			WebElement pwd=driver.findElement(By.xpath(pwd_xpath));
