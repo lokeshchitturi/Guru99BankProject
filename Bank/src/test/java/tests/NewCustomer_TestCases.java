@@ -1,4 +1,4 @@
-package newCustomer;
+package tests;
 
 import java.util.List;
 import java.util.Random;
@@ -9,11 +9,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import login.login;
-
 
 //id<name< linketext < tagname < css < xpath
-public class NewCustomer_TestCases {
+public class NewCustomer_TestCases extends Hooks {
 	static String newcustomer_link = "New Customer";
 	static String customername_xpath = "//input[@name='name']";
 	static String gender_xpath = "//input[@type=\"radio\"]";
