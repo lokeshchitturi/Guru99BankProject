@@ -10,7 +10,7 @@ public class EditCustomer {
 		WebDriver driver=null;
 		try {
 			
-			 login.loginIntoApplication();
+		//	 login.loginIntoApplication();
 				Thread.sleep(3000);
 				WebElement editCus= driver.findElement(By.xpath(editCustomer));
 				editCus.click();

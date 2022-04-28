@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -49,6 +50,13 @@ public class WebdriverUtils {
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(Long.valueOf(prop.getProperty("IMPLICIT_TIMEOUT"))));
 		
+	}
+	
+	public static String getAlertTextAndAccept() {
+		Alert alert=driver.switchTo().alert();
+		String alertText=alert.getText();
+		alert.accept();
+		return alertText;
 	}
 	
 	
