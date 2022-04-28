@@ -4,14 +4,26 @@ import java.util.List;
 import java.util.Random;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import pageObject.LoginPage;
+import utils.WebdriverUtils;
+
 
 //id<name< linketext < tagname < css < xpath
 public class NewCustomer_TestCases extends Hooks {
+	
+	LoginPage loginPage;
+	//NewCustomerPage newCustomerPage;
+	@Before()
+	public void initisalizePageObject() {
+		loginPage=new LoginPage(WebdriverUtils.driver);
+		
+	}
 	static String newcustomer_link = "New Customer";
 	static String customername_xpath = "//input[@name='name']";
 	static String gender_xpath = "//input[@type=\"radio\"]";
@@ -87,7 +99,8 @@ public class NewCustomer_TestCases extends Hooks {
 	
 	@Test
 	public void test_creatNewCustomer() throws Exception {
-		NewCustomer_TestCases.driver=login.loginIntoApplication();
+		//NewCustomer_TestCases.driver=login.loginIntoApplication();
+		loginPage.validateLogin();
 		NewCustomer_TestCases.createNewCustomer();
 	}
 
