@@ -1,11 +1,15 @@
 package utils;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
-public class InstanceFactory {
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
+
+public class InstanceFactory extends WebdriverUtils{
 	
 	
 	
@@ -26,4 +30,26 @@ public class InstanceFactory {
 		return prop;
 		
 	}
+	
+	public static ExtentReports initalizeExtentReportObject() throws Exception {
+		try {
+			
+			if(extent ==null)
+			{
+			ExtentSparkReporter htmlReport=new ExtentSparkReporter(new File(System.getProperty("user.dir")+"/extent-output/ExtentReport.html"));
+			htmlReport.config().setDocumentTitle("Automation Report");
+			htmlReport.config().setReportName("Praticse automation");		
+			
+			extent=new ExtentReports();		
+			extent.attachReporter(htmlReport);			
+			}
+			
+			return extent;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
 }

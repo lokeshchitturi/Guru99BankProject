@@ -14,13 +14,17 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class WebdriverUtils {
 
 	public static WebDriver driver;
 	public static Properties prop;
-	
+	public static ExtentReports extent;
+	public static ExtentTest test;
 	
 	public static final String propertiesFilepath="//src//test//resources//project.properties";
 	

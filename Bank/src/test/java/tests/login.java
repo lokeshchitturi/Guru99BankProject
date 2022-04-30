@@ -1,18 +1,22 @@
 package tests;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestName;
 
 import pageObject.LoginPage;
-import utils.WebdriverUtils;
 
 public class login extends Hooks {
 	
 	LoginPage loginpage;
+	@Rule
+	public TestName name=new TestName();
 	
 	@Before
 	public void intlializePageObject() {
-		loginpage=new LoginPage(WebdriverUtils.driver);
+		loginpage=new LoginPage();
+		test=extent.createTest(name.getMethodName());
 	}
 	
 	@Test
