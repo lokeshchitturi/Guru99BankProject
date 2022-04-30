@@ -15,13 +15,13 @@ import utils.WebdriverUtils;
 
 
 //id<name< linketext < tagname < css < xpath
-public class NewCustomer_TestCases extends Hooks {
+public class NewCustomer_TestCases extends WebdriverUtils {
 	
 	LoginPage loginPage;
 	//NewCustomerPage newCustomerPage;
 	@Before()
 	public void initisalizePageObject() {
-		loginPage=new LoginPage(WebdriverUtils.driver);
+		loginPage=new LoginPage();
 		
 	}
 	static String newcustomer_link = "New Customer";
