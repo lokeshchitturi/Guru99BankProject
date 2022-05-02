@@ -73,5 +73,17 @@ public class LoginPage extends WebdriverUtils{
 		
 	}
 	
+	public void validatePageTitle(String titleName) throws Exception {
+		try {
+			String actualTitle=driver.getTitle();
+			Assert.assertEquals(actualTitle, titleName);
+			test.log(Status.PASS, "Page Title Matched");
+		} catch (Exception e) {
+			// TODO: handle exception
+			test.log(Status.FAIL, "Page title didn't matched");
+			throw new Exception(e);
+		}
+	}
+	
 
 }
