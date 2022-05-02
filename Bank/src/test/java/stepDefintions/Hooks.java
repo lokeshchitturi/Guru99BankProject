@@ -1,23 +1,22 @@
-package tests;
+package stepDefintions;
 
-import java.lang.reflect.Method;
 
-import org.junit.After;
-import org.junit.Before;
-
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
+import io.cucumber.java.Scenario;
 import utils.InstanceFactory;
 import utils.WebdriverUtils;
 
 public class Hooks extends WebdriverUtils{
 	
 	
-	@Before
-	public void setup() throws Exception {
+	@Before(order = 1)
+	public void setup(Scenario scenario) throws Exception {
 		
 		openBrowser();
 		prop=InstanceFactory.intilializePropertyFile(propertiesFilepath);
 		extent=InstanceFactory.initalizeExtentReportObject();
-		
+		test=extent.createTest(scenario.getName());
 	
 	}
 	
