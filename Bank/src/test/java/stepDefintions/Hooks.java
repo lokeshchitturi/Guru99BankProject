@@ -1,6 +1,10 @@
 package stepDefintions;
 
 
+import java.util.Locale;
+
+import com.github.javafaker.Faker;
+
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
@@ -17,6 +21,7 @@ public class Hooks extends WebdriverUtils{
 		prop=InstanceFactory.intilializePropertyFile(propertiesFilepath);
 		extent=InstanceFactory.initalizeExtentReportObject();
 		test=extent.createTest(scenario.getName());
+		faker=new Faker(Locale.ENGLISH);
 	
 	}
 	

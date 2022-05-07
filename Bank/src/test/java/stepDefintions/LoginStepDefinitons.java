@@ -1,5 +1,9 @@
 package stepDefintions;
 
+import java.util.List;
+import java.util.Map;
+
+import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 
 import io.cucumber.java.Before;
@@ -42,10 +46,23 @@ public class LoginStepDefinitons {
 	   System.out.println("login click ------called respectived method in pageobjecet");
 	}
 
-	@Then("validate user logged into application succesfully")
+	@Then("user logged into application succesfully")
 	public void validate_user_logged_into_application_succesfully() throws Exception {
 	    // Write code here that turns the phrase above into concrete actions
 		 loginpage.validateLogin();
 	}
-
+	
+	@When("validate error message by submitting only username")
+	public void validate_error() throws Exception {
+		loginpage.validatePasswordErrorMessage();
+	}
+	
+	@Then("user logout from application succcesfully")
+	public void user_logout_from_application_succcesfully() {
+	    // Write code here that turns the phrase above into concrete actions
+		WebdriverUtils.getAlertTextAndAccept();
+		Assert.assertTrue(loginpage.username_textbox.isDisplayed());
+		
+	}
+	
 }
