@@ -7,15 +7,20 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.Random;
 
 import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
+import com.github.javafaker.Faker;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
@@ -25,6 +30,7 @@ public class WebdriverUtils {
 	public static Properties prop;
 	public static ExtentReports extent;
 	public static ExtentTest test;
+	public static Faker faker;
 	
 	public static final String propertiesFilepath="//src//test//resources//project.properties";
 	
@@ -63,11 +69,17 @@ public class WebdriverUtils {
 		return alertText;
 	}
 	
+	public static int getRandomNumber(int rangeExclusive) {
+		Random random =new Random();
+		return random.nextInt(rangeExclusive);
+	}
 	
+    public static void setValueByJs(WebElement element,String value) {
+    	JavascriptExecutor js=(JavascriptExecutor) driver;
+    	js.executeScript("arguments[0].value='arguments[1]'", element,value);
+	}
 	
-	
-	
-	
+
 	
 	
 	

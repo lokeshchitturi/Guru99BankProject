@@ -8,6 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 
 import com.aventstack.extentreports.Status;
 
@@ -16,26 +17,43 @@ import utils.WebdriverUtils;
 public class LoginPage extends WebdriverUtils{
 	
 	@FindBy(xpath="//input[@name='uid']")
-	WebElement username_textbox;
+	public WebElement username_textbox;
 	
 	@FindBy(name="password")
-	WebElement password_textbox;
+	public WebElement password_textbox;
 	
 	@FindBy(xpath="//input[@type='submit']")
-	WebElement login_button;
+	public WebElement login_button;
 	
 	@FindBy(css=".heading3")
-	WebElement loginSuccessMessage_label;
+	public WebElement loginSuccessMessage_label;
+	
+	@FindBy(xpath = "//*[text()='Password must not be blank']")
+	public WebElement passwordError_label;
 
 	
 	public LoginPage() {
-		PageFactory.initElements(driver,this);
+		//PageFactory.initElements(new AjaxElementLocatorFactory(driver,20), this);
+		PageFactory.initElements(driver, this);
+
+	}
+	
+	public void enterUserName() throws Exception {
+		try {
+			username_textbox.sendKeys(prop.getProperty("username"));
+			test.log(Status.PASS, "Enetered username as "+prop.getProperty("username"));
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			test.log(Status.FAIL, "Unable to enter username");
+			throw new Exception(e);
+		}
+		
 	}
 	
 	public void validateLogin() throws Exception {	
 		try {
-			username_textbox.sendKeys(prop.getProperty("username"));
-			test.log(Status.PASS, "Enetered username as "+prop.getProperty("username"));
+			enterUserName();
 			password_textbox.sendKeys(prop.getProperty("password"));
 			test.log(Status.PASS, "Entered password");
 			login_button.click();
@@ -83,6 +101,19 @@ public class LoginPage extends WebdriverUtils{
 			test.log(Status.FAIL, "Page title didn't matched");
 			throw new Exception(e);
 		}
+	}
+	
+	public void validatePasswordErrorMessage() throws Exception {
+		enterUserName();
+		login_button.click();
+		String actualText=WebdriverUtils.getAlertTextAndAccept();
+		System.out.println(actualText);
+		Assert.assertEquals(actualText, "User or Password is not valid");
+		test.log(Status.PASS, "Didnot login by providing invalid password");	
+//		String passwordErrorText=passwordError_label.getText();
+//		Assert.assertEquals(passwordErrorText, "Password must not be blank");
+//		Assert.assertTrue(passwordError_label.isDisplayed());
+//		test.log(Status.PASS, "Error message displayed");
 	}
 	
 
