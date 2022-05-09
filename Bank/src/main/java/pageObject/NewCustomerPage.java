@@ -1,11 +1,16 @@
 package pageObject;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
@@ -13,7 +18,7 @@ import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 
 import com.aventstack.extentreports.Status;
 
-import junit.framework.Assert;
+
 import utils.WebdriverUtils;
 
 public class NewCustomerPage extends WebdriverUtils{
@@ -63,6 +68,16 @@ public class NewCustomerPage extends WebdriverUtils{
 	@FindBy(className = "heading3")
 	WebElement heading;
 	
+	@FindAll({@FindBy(xpath = "//table[@id='customer']//tr[count(child::td)=2]")})
+	List<WebElement> customerDetailsList_rows;
+	
+	@FindBy(linkText = "Continue")
+	WebElement continue_link;
+	
+	
+	public static Map<String, String> customerDetails=new HashMap<String, String>();
+	
+	
 	
 	public NewCustomerPage() {
 		PageFactory.initElements(new AjaxElementLocatorFactory(driver,20), this);
@@ -75,12 +90,14 @@ public class NewCustomerPage extends WebdriverUtils{
 			if(googleAd_iframe.isDisplayed()) {
 				driver.switchTo().frame(googleAd_iframe);
 				test.log(Status.PASS, "Switched to the parent frame ");
+			//	if(ad_iframe.isDisplayed())
 				driver.switchTo().frame(ad_iframe);
 				dismiss_button=driver.findElements(By.id("dismiss-button"));
 				if(dismiss_button.size()>0) {
 					dismiss_button.get(0).click();
 				}
 			}
+			driver.switchTo().defaultContent();
 		} catch (Exception e) {
 			// TODO: handle exception
 			test.log(Status.FAIL, "Unable to close the google Add");
@@ -89,7 +106,7 @@ public class NewCustomerPage extends WebdriverUtils{
 	}
 	
 	
-	public void createNewCustomer() {
+	public void createNewCustomer() throws Exception {
 		
 		customerName_textbox.sendKeys(faker.name().firstName());
 		int radioIndex=getRandomNumber(2);
@@ -106,13 +123,22 @@ public class NewCustomerPage extends WebdriverUtils{
 		emailId_textbox.sendKeys(faker.internet().emailAddress());
 		password_textbox.sendKeys(faker.name().firstName());
 		submit_button.click();
-		Assert.assertEquals(heading.getText(), "Customer Registered Successfully!!!");
+		Assert.assertTrue(continue_link.isDisplayed());
+		takeScreenShot();
 	}
 	
-	public static void main(String[] args) {
-		Date dob=new Date();
-		SimpleDateFormat sdf=new SimpleDateFormat("ddMMyyyy");
-		System.out.println(sdf.format(dob));
+	public void validateCustomerDetails() throws Exception {
+		try {
+			Assert.assertEquals(heading.getText(), "Customer Registered Successfully!!!");
+			for (WebElement row : customerDetailsList_rows) {
+				List<WebElement> columns= row.findElements(By.tagName("td"));
+				customerDetails.put(columns.get(0).getText(), columns.get(1).getText());
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			throw new Exception(e);
+		}
 	}
 	
 }
