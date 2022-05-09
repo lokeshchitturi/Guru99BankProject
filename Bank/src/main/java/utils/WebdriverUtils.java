@@ -1,22 +1,32 @@
 package utils;
 
+import java.awt.RenderingHints.Key;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 import java.util.Random;
 
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.Select;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
@@ -79,6 +89,17 @@ public class WebdriverUtils {
     	js.executeScript("arguments[0].value='arguments[1]'", element,value);
 	}
 	
+    
+    public static void takeScreenShot() throws IOException {
+    	
+    	Date date=new Date();
+    	SimpleDateFormat sdf=new SimpleDateFormat("dd_MM_yyyy_HH_mm_ss_SS");
+    	
+    	TakesScreenshot screenshot=(TakesScreenshot) driver;	
+        File sourceFile=screenshot.getScreenshotAs(OutputType.FILE);
+        FileUtils.copyFile(sourceFile, new File(System.getProperty("user.dir")+"//screenshots//test"+sdf.format(date)+".jpeg"));   
+        
+    }
 
 	
 	

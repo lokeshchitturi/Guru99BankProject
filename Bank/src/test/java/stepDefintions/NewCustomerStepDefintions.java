@@ -22,9 +22,9 @@ public class NewCustomerStepDefintions {
 	    newCustomerPage.createNewCustomer();
 	}
 	@Then("validate new customer got created")
-	public void validate_new_customer_got_created() {
+	public void validate_new_customer_got_created() throws Exception {
 	    // Write code here that turns the phrase above into concrete actions
-	  
+		newCustomerPage.validateCustomerDetails();
 	}
 
 }

@@ -29,7 +29,7 @@ public class Hooks extends WebdriverUtils{
 	@After
 	public void tearDown() {
 		extent.flush();
-		WebdriverUtils.driver.close();
+		//WebdriverUtils.driver.close();
 	}
 
 }
